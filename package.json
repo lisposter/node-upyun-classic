@@ -1,5 +1,5 @@
 {
-  "name": "node-upyun-legacy-legacy",
+  "name": "upyun-legacy",
   "version": "0.1.0",
   "description": "official upyun sdk for node.js",
   "main": "index.js",
