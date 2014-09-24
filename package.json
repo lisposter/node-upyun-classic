@@ -1,0 +1,32 @@
+{
+  "name": "node-upyun-legacy-legacy",
+  "version": "0.1.0",
+  "description": "official upyun sdk for node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:lisposter/node-upyun-legacy.git"
+  },
+  "keywords": [
+    "upyun",
+    "sdk",
+    "cdn",
+    "cloudstorage"
+  ],
+  "author": "Leigh Zhu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lisposter/node-upyun-legacy/issues"
+  },
+  "homepage": "https://github.com/lisposter/node-upyun-legacy",
+  "devDependencies": {
+    "co": "~3.0.2",
+    "mocha": "~1.16.2",
+    "should": "~4.0.4",
+    "istanbul-harmony": "~0.2.9",
+    "thunkify": "^2.0.0"
+  }
+}
