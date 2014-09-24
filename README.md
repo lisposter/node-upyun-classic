@@ -6,7 +6,7 @@
 official upyun sdk for node.js (legacy)
 
 # Install
-__NOT AVAILABLE NOW__
+
 ```sh
 $ npm install upyun-legacy --save
 ```
