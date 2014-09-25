@@ -1,4 +1,5 @@
 dev-test/*
+.idea/*
 # Logs
 logs
 *.log

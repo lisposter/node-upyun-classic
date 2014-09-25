@@ -1,5 +1,5 @@
+'use strict';
 var fs = require('fs');
-var querystring = require('querystring');
 
 var utils = require('./lib/utils');
 var pkg = require('./package.json');
@@ -7,19 +7,17 @@ var pkg = require('./package.json');
 
 function UPYUN(bucket, username, password, endpoint) {
     this._conf = {
-        bucket : bucket,
-        username : username,
-        password : password,
-        version : pkg.version,
-        endpoint : utils.transEndpoint(endpoint)
+        bucket: bucket,
+        username: username,
+        password: password,
+        version: pkg.version,
+        endpoint: utils.transEndpoint(endpoint)
     };
 }
 
 UPYUN.prototype.getConf = function(key) {
     if(this._conf[key]) {
         return this._conf[key];
-    } else {
-        return;
     }
 };
 
@@ -34,10 +32,13 @@ UPYUN.prototype.setEndpoint = function(ep) {
 UPYUN.prototype.getUsage = function(callback) {
     var options = utils.genReqOpts(this, 'GET', this._conf.bucket + '/?usage');
     utils.request(options, null, function(err, result) {
-        if(err) return callback(err);
+        if (err) {
+            callback(err);
+            return;
+        }
         result.data = {
             space: result.data
-        }
+        };
         callback(null, utils.parseRes(result));
     });
 };
@@ -53,7 +54,10 @@ UPYUN.prototype.listDir = function(remotePath, callback) {
     var options = utils.genReqOpts(this, 'GET', location);
 
     utils.request(options, null, function(err, result) {
-        if(err) return callback(err);
+        if (err) {
+            callback(err);
+            return;
+        }
         var files = result.data.split('\n').reduce(function(prev, curr, idx, arr) {
             var values = curr.split('\t');
             return prev.concat({
@@ -75,7 +79,10 @@ UPYUN.prototype.listDir = function(remotePath, callback) {
 UPYUN.prototype.createDir = function(remotePath, callback) {
     var options = utils.genReqOpts(this, 'POST', this._conf.bucket + remotePath, 0, { "Mkdir": true, 'Folder': true });
     utils.request(options, null, function(err, result) {
-        if (err) return callback(err);
+        if (err) {
+            callback(err);
+            return;
+        }
         callback(null, utils.parseRes(result));
     });
 };
@@ -83,7 +90,10 @@ UPYUN.prototype.createDir = function(remotePath, callback) {
 UPYUN.prototype.removeDir = function(remotePath, callback) {
     var options = utils.genReqOpts(this, 'DELETE', this._conf.bucket + remotePath);
     utils.request(options, null, function(err, result) {
-        if (err) return callback(err);
+        if (err) {
+            callback(err);
+            return;
+        }
         callback(null, utils.parseRes(result));
     });
 };
@@ -91,7 +101,10 @@ UPYUN.prototype.removeDir = function(remotePath, callback) {
 UPYUN.prototype.existsFile = function(remotePath, callback) {
     var options = utils.genReqOpts(this, 'HEAD', this._conf.bucket + remotePath);
     utils.request(options, null, function(err, result) {
-        if(err) return callback(err);
+        if (err) {
+            callback(err);
+            return;
+        }
         result.data = Object.keys(result.headers).filter(function(itm) {
             return itm.indexOf('x-upyun') >= 0;
         }).reduce(function(prev, curr) {
@@ -106,8 +119,8 @@ UPYUN.prototype.existsFile = function(remotePath, callback) {
 UPYUN.prototype.uploadFile = function(remotePath, localFile, type, checksum, opts, callback) {
     if(typeof arguments[arguments.length - 1] !== 'function') {
         throw new Error('No callback specified.');
-    };
-    var callback = arguments[arguments.length - 1];
+    }
+    callback = arguments[arguments.length - 1];
     var isFile = fs.existsSync(localFile);
     var _self = this;
     opts = opts || {};
@@ -138,7 +151,10 @@ UPYUN.prototype.uploadFile = function(remotePath, localFile, type, checksum, opt
         var options = utils.genReqOpts(_self, 'PUT', _self._conf.bucket + remotePath, contentLength, opts);
         options.headers.Mkdir = true;
         utils.request(options, localFile, function(err, result) {
-            if(err) return callback(err);
+            if (err) {
+            callback(err);
+            return;
+        }
             callback(null, utils.parseRes(result));
         });
     }
@@ -148,7 +164,10 @@ UPYUN.prototype.downloadFile = function(remotePath, callback) {
     var options = utils.genReqOpts(this, 'GET', this._conf.bucket + remotePath);
 
     utils.request(options, null, function(err, result) {
-        if(err) return callback(err);
+        if (err) {
+            callback(err);
+            return;
+        }
         callback(null, result);
     });
 };
@@ -157,7 +176,10 @@ UPYUN.prototype.removeFile = function(remotePath, callback) {
     var options = utils.genReqOpts(this, 'DELETE', this._conf.bucket + remotePath);
 
     utils.request(options, null, function(err, result) {
-        if(err) return callback(err);
+        if (err) {
+            callback(err);
+            return;
+        }
         callback(null, utils.parseRes(result));
     });
 };
