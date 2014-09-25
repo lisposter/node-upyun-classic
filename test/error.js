@@ -1,3 +1,4 @@
+'use strict';
 var UPYUN = require('..');
 var should = require('should');
 
@@ -8,12 +9,14 @@ describe('Error handle', function() {
         it('should return sign error', function(done) {
             upyun._conf.password = 'wrong';
             upyun.getUsage(function(err, result) {
-                if(err) throw err;
+                if(err) {
+                    throw err;
+                }
                 result.error.message.should.match(/sign/);
                 done();
-            })
-        })
-    })
+            });
+        });
+    });
 
     describe('No callback function', function() {
         it('should throw error', function(done) {
@@ -29,5 +32,5 @@ describe('Error handle', function() {
             }).should.throw();
             done();
         });
-    })
+    });
 });
