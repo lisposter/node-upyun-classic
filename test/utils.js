@@ -1,5 +1,7 @@
 'use strict';
 var UPYUN = require('..');
+var utils = require('../lib/utils');
+
 var should = require('should');
 
 var upyun = new UPYUN('travis', 'travisci', 'testtest', 'v3');
@@ -57,6 +59,23 @@ describe('utils: ', function() {
         it('should set endpoint of v2', function() {
             var upyunv2 = new UPYUN('travis', 'travisci', 'testtest', 'v2');
             upyunv2.getConf('endpoint').should.be.exactly('v2.api.upyun.com');
+        });
+    });
+
+    describe('utils.request()', function() {
+        it('should return a request option object', function() {
+            var _conf = {bucket: 'test', username: 'test', password: 'password', endpoint: 'endpoint'};
+            var options = utils.genReqOpts({_conf: _conf}, 'GET', '/test', null, null);
+            options.path.should.be.exactly('/test');
+        });
+    });
+
+    describe('utils.parseRes()', function() {
+        it('it should return a error code', function() {
+            var res = {
+                data: 'some text not a json valid string'
+            };
+            utils.parseRes(res).should.have.property('error');
         });
     });
 });
