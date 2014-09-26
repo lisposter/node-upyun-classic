@@ -64,7 +64,7 @@ describe('utils: ', function() {
 
     describe('utils.request()', function() {
         it('should return a request option object', function() {
-            var _conf = {bucket: 'test', username: 'test', password: 'password', endpoint: 'endpoint'};
+            var _conf = {bucket: 'test', operator: 'test', password: 'password', endpoint: 'endpoint'};
             var options = utils.genReqOpts({_conf: _conf}, 'GET', '/test', null, null);
             options.path.should.be.exactly('/test');
         });

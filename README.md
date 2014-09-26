@@ -94,15 +94,12 @@ To get how many quota has been used.(Unit:`Byte`)
 
 ---------------------------------------
 
-<a name="" />
-### listDir(remotePath, [limit], [order], [iter], callback)
+<a name="listDir" />
+### listDir(remotePath, callback)
 Get the file list of that dir. The response contains each item's type(file or dir), size(unit: `Byte`), last modify time.
 
 __Arguments__
 * `remote_dir_path` The dir path which you want to traverse.
-* `limit` Specifies the maximum number of file list output per request.
-* `order` Sort the file list by 'last_modified' as `asc` or `desc`.(Default: `asc`)
-* `iter` Specifies the start of iteration.
 
 ---------------------------------------
 

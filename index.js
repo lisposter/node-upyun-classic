@@ -5,10 +5,10 @@ var utils = require('./lib/utils');
 var pkg = require('./package.json');
 
 
-function UPYUN(bucket, username, password, endpoint) {
+function UPYUN(bucket, operator, password, endpoint) {
     this._conf = {
         bucket: bucket,
-        username: username,
+        operator: operator,
         password: password,
         version: pkg.version,
         endpoint: utils.transEndpoint(endpoint)
