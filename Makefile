@@ -28,8 +28,8 @@ test-travis:
 		-- -u exports \
 		--require should \
 		--slow 5s \
-		--timeout 30000 \
+		--timeout 50000 \
 		$(TESTS) \
 		--bail
-		
+
 .PHONY: test

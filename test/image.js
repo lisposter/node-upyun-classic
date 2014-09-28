@@ -4,7 +4,7 @@ var fs = require('fs');
 var UPYUN = require('..');
 var should = require('should');
 
-var upyun_img = new UPYUN('travis-img', 'travisci', 'testtest', '0');
+var upyun_img = new UPYUN('travis-img', 'travisci', 'testtest', 'ctcc');
 var tempstr = '/' + Math.random().toString().slice(-8);
 
 describe('Image process', function() {

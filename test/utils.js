@@ -4,7 +4,7 @@ var utils = require('../lib/utils');
 
 var should = require('should');
 
-var upyun = new UPYUN('travis', 'travisci', 'testtest', 'v3');
+var upyun = new UPYUN('travis', 'travisci', 'testtest', 'ctcc');
 
 describe('utils: ', function() {
     describe('.getConf(key)', function() {

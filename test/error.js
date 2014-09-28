@@ -2,7 +2,7 @@
 var UPYUN = require('..');
 var should = require('should');
 
-var upyun = new UPYUN('travis', 'travisci', 'testtest', 'v0');
+var upyun = new UPYUN('travis', 'travisci', 'testtest', 'ctcc');
 
 describe('Error handle', function() {
     describe('Sign error', function() {
