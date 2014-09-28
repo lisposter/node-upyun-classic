@@ -31,7 +31,7 @@ UPYUN.prototype.setEndpoint = function(ep) {
 
 UPYUN.prototype.getUsage = function(callback) {
     var options = utils.genReqOpts(this, 'GET', this._conf.bucket + '/?usage');
-    utils.request(options, null, function(err, result) {
+    utils.request(options, null, null, function(err, result) {
         if (err) {
             callback(err);
             return;
@@ -53,7 +53,7 @@ UPYUN.prototype.listDir = function(remotePath, callback) {
     var location = this._conf.bucket + remotePath;
     var options = utils.genReqOpts(this, 'GET', location);
 
-    utils.request(options, null, function(err, result) {
+    utils.request(options, null, null, function(err, result) {
         if (err) {
             callback(err);
             return;
@@ -78,7 +78,7 @@ UPYUN.prototype.listDir = function(remotePath, callback) {
 
 UPYUN.prototype.createDir = function(remotePath, callback) {
     var options = utils.genReqOpts(this, 'POST', this._conf.bucket + remotePath, 0, { "Mkdir": true, 'Folder': true });
-    utils.request(options, null, function(err, result) {
+    utils.request(options, null, null, function(err, result) {
         if (err) {
             callback(err);
             return;
@@ -89,7 +89,7 @@ UPYUN.prototype.createDir = function(remotePath, callback) {
 
 UPYUN.prototype.removeDir = function(remotePath, callback) {
     var options = utils.genReqOpts(this, 'DELETE', this._conf.bucket + remotePath);
-    utils.request(options, null, function(err, result) {
+    utils.request(options, null, null, function(err, result) {
         if (err) {
             callback(err);
             return;
@@ -100,7 +100,7 @@ UPYUN.prototype.removeDir = function(remotePath, callback) {
 
 UPYUN.prototype.existsFile = function(remotePath, callback) {
     var options = utils.genReqOpts(this, 'HEAD', this._conf.bucket + remotePath);
-    utils.request(options, null, function(err, result) {
+    utils.request(options, null, null, function(err, result) {
         if (err) {
             callback(err);
             return;
@@ -150,20 +150,29 @@ UPYUN.prototype.uploadFile = function(remotePath, localFile, type, checksum, opt
     function _upload(contentLength, opts) {
         var options = utils.genReqOpts(_self, 'PUT', _self._conf.bucket + remotePath, contentLength, opts);
         options.headers.Mkdir = true;
-        utils.request(options, localFile, function(err, result) {
+        utils.request(options, localFile, null, function(err, result) {
             if (err) {
-            callback(err);
-            return;
-        }
+                callback(err);
+                return;
+            }
+            result.data = Object.keys(result.headers).filter(function(itm) {
+                return itm.indexOf('x-upyun') >= 0;
+            }).reduce(function(prev, curr) {
+                prev[curr.split('-').pop()] = result.headers[curr];
+                // TODO: covert date value to millisecond.
+                return prev;
+            }, {});
             callback(null, utils.parseRes(result));
         });
     }
 };
 
-UPYUN.prototype.downloadFile = function(remotePath, callback) {
+UPYUN.prototype.downloadFile = function(remotePath, localPath, callback) {
+    callback = arguments[arguments.length - 1];
+    localPath = arguments.length === 3 && (typeof localPath === 'string') ? localPath :  null;
     var options = utils.genReqOpts(this, 'GET', this._conf.bucket + remotePath);
 
-    utils.request(options, null, function(err, result) {
+    utils.request(options, null, localPath, function(err, result) {
         if (err) {
             callback(err);
             return;
@@ -175,7 +184,7 @@ UPYUN.prototype.downloadFile = function(remotePath, callback) {
 UPYUN.prototype.removeFile = function(remotePath, callback) {
     var options = utils.genReqOpts(this, 'DELETE', this._conf.bucket + remotePath);
 
-    utils.request(options, null, function(err, result) {
+    utils.request(options, null, null, function(err, result) {
         if (err) {
             callback(err);
             return;
