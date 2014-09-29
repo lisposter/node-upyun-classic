@@ -92,6 +92,14 @@ All responses contain http status code and raw response header for futher usage.
 ### getUsage(callback)
 To get how many quota has been used.(Unit:`Byte`)
 
+response eg.
+
+```js
+{ statusCode: 200,
+  headers: { ... },
+  data: { space: '660612' } }
+```
+
 ---------------------------------------
 
 <a name="listDir" />
@@ -99,7 +107,33 @@ To get how many quota has been used.(Unit:`Byte`)
 Get the file list of that dir. The response contains each item's type(file or dir), size(unit: `Byte`), last modify time.
 
 __Arguments__
-* `remote_dir_path` The dir path which you want to traverse.
+* `remotePath` The dir path which you want to traverse.
+
+response eg.
+
+```js
+{
+  "statusCode": 200,
+  "headers": { ... },
+  "data": {
+    "location": "/",
+    "files": [
+      {
+        "name": "test_manual",
+        "type": "folder",
+        "length": "0",
+        "last_modified": "1411701197"
+      },
+      {
+        "name": "dir",
+        "type": "file",
+        "length": "0",
+        "last_modified": "1411546581"
+      }
+    ]
+  }
+}
+```
 
 ---------------------------------------
 
@@ -121,7 +155,7 @@ Delete a dir
 ---------------------------------------
 
 <a name="uploadFile" />
-### uploadFile(remotePath, localFile, type, checksum, [opts], callback)
+### uploadFile(remotePath, localFile, type, [checksum], [opts], callback)
 Upload a file into UPYUN bucket.
 
 __Arguments__
@@ -131,6 +165,19 @@ __Arguments__
 * `checksum` Set `true` to force SDK send a md5 of local file to UPYUN. Or set a md5value string by yourself.
 * `opts` The additional http request headers(JavaScript Object). More detail in [Official Docs](http://docs.upyun.com/api/http_api/#上传文件)
 
+```js
+ {
+     statusCode: 200,
+     headers: { ... },
+     data: {
+         width: '400',
+         height: '200',
+         frames: '1',
+         type: 'PNG'
+     }
+ }
+```
+
 ---------------------------------------
 
 <a name="existsFile" />
@@ -139,6 +186,18 @@ __Arguments__
 
 __Arguments__
 * `remotePath` The file's path in your UPYUN bucket.
+
+```js
+{
+    statusCode: 200,
+    headers: { ... },
+    data: {
+        type: 'file',
+        size: '1075',
+        date: '1407729976'
+    }
+}
+```
 
 ---------------------------------------
 
@@ -152,11 +211,12 @@ __Arguments__
 ---------------------------------------
 
 <a name="removeFile" />
-### removeFile(remotePath, callback)
+### removeFile(remotePath, [localPath], callback)
 Delete a file from UPYUN bucket.
 
 __Arguments__
 * `remotePath` The file's path in your UPYUN bucket.
+* `localPath` Where the file will save to. If no `localPath`, the file's content will output directly in the response body.
 
 # Utils
 

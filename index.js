@@ -50,8 +50,7 @@ UPYUN.prototype.listDir = function(remotePath, callback) {
 
     callback = arguments[arguments.length - 1];
 
-    var location = this._conf.bucket + remotePath;
-    var options = utils.genReqOpts(this, 'GET', location);
+    var options = utils.genReqOpts(this, 'GET', this._conf.bucket + remotePath);
 
     utils.request(options, null, null, function(err, result) {
         if (err) {
@@ -68,7 +67,7 @@ UPYUN.prototype.listDir = function(remotePath, callback) {
             });
         }, []);
         result.data = {
-            location: location,
+            location: remotePath,
             files: files
         };
 
@@ -128,7 +127,7 @@ UPYUN.prototype.uploadFile = function(remotePath, localFile, type, checksum, opt
     // TODO: default type
     opts['Content-Type'] = type;
     var contentLength = 0;
-    checksum = checksum || true;
+    checksum = arguments.length > 4 && typeof checksum !== 'function' ? checksum : true;
 
     // TODO: optimize logical
     if(isFile && checksum === true) {

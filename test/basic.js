@@ -63,6 +63,18 @@ describe('REST API: ', function() {
 
     describe('uploadFile(remotePath, localFile, type, checksum, [opts], callback)', function() {
         it('should return 200', function(done) {
+            upyun.uploadFile('/test' + tempstr, './LICENSE', 'text/plain', function(err, result) {
+                if(err) {
+                    throw err;
+                }
+                result.statusCode.should.be.exactly(200);
+                done();
+            });
+        });
+    });
+
+    describe('uploadFile(remotePath, localFile, type, checksum, [opts], callback)', function() {
+        it('should return 200', function(done) {
             upyun.uploadFile('/test' + tempstr, './LICENSE', 'text/plain', '69e97c8b91968c5878f331e53b8dcbf4', function(err, result) {
                 if(err) {
                     throw err;

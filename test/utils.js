@@ -51,6 +51,11 @@ describe('utils: ', function() {
     });
 
     describe('initial client', function() {
+        it('should set endpoint of v0', function() {
+            var upyunv0 = new UPYUN('travis', 'travisci', 'testtest', 'v0');
+            upyunv0.getConf('endpoint').should.be.exactly('v0.api.upyun.com');
+        });
+
         it('should set endpoint of v1', function() {
             var upyunv1 = new UPYUN('travis', 'travisci', 'testtest', 'v1');
             upyunv1.getConf('endpoint').should.be.exactly('v1.api.upyun.com');
@@ -59,6 +64,11 @@ describe('utils: ', function() {
         it('should set endpoint of v2', function() {
             var upyunv2 = new UPYUN('travis', 'travisci', 'testtest', 'v2');
             upyunv2.getConf('endpoint').should.be.exactly('v2.api.upyun.com');
+        });
+
+        it('should set endpoint of v3', function() {
+            var upyunv3 = new UPYUN('travis', 'travisci', 'testtest', 'v3');
+            upyunv3.getConf('endpoint').should.be.exactly('v3.api.upyun.com');
         });
     });
 
