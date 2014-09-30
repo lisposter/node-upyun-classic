@@ -202,21 +202,21 @@ __Arguments__
 ---------------------------------------
 
 <a name="downloadFile" />
-### downloadFile(remotePath, callback)
+### downloadFile(remotePath, [localPath], callback)
 Download a file from UPYUN bucket.
 
 __Arguments__
 * `remotePath` The file's path in your UPYUN bucket.
+* `localPath` Where the file will save to. If no `localPath`, the file's content will output directly in the response body.
 
 ---------------------------------------
 
 <a name="removeFile" />
-### removeFile(remotePath, [localPath], callback)
+### removeFile(remotePath, callback)
 Delete a file from UPYUN bucket.
 
 __Arguments__
 * `remotePath` The file's path in your UPYUN bucket.
-* `localPath` Where the file will save to. If no `localPath`, the file's content will output directly in the response body.
 
 # Utils
 
