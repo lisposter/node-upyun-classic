@@ -50,9 +50,9 @@ When an error occured, the error will be catched, and returned in the response
 {
     statusCode: 401,    // http stats code
     error: {
-        error_code: 40104,
-        request: 'GET /imgtest',
-        message: 'Signature error, (signature = md5(METHOD&PATH&DATE&CONTENT_LENGTH&MD5(PASSWORD))).'
+        error_code: 401,
+        request_id: '9e7ce1bac4870ce5f066dd8775fda6b9',
+        message: '<h1>401 Unauthorized</h1>Sign error (sign = md5(METHOD&URI&DATE&CONTENT_LENGTH&MD5(PASSWORD)))'
     },                  // error message
     headers: {
         server: 'nginx/1.1.19',
