@@ -57,15 +57,20 @@ UPYUN.prototype.listDir = function(remotePath, callback) {
             callback(err);
             return;
         }
-        var files = result.data.split('\n').reduce(function(prev, curr, idx, arr) {
-            var values = curr.split('\t');
-            return prev.concat({
-                "name": values[0],
-                "type": values[1] === 'N' ? 'file' : 'folder',
-                "length": values[2],
-                "last_modified": values[3]
-            });
-        }, []);
+
+        var files = [];
+        if (result.data || result.length > 0) {
+            files = result.data.split('\n').reduce(function(prev, curr, idx, arr) {
+                var values = curr.split('\t');
+                return prev.concat({
+                    "name": values[0],
+                    "type": values[1] === 'N' ? 'file' : 'folder',
+                    "length": values[2],
+                    "last_modified": values[3]
+                });
+            }, []);
+        }
+
         result.data = {
             location: remotePath,
             files: files

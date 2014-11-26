@@ -25,6 +25,15 @@ describe('REST API: ', function() {
         });
     });
 
+    describe('listDir(remotePath, callback)', function() {
+        it('should return a result contains files', function(done) {
+            upyun.listDir('/empty/', function(err, result) {
+                result.data.should.have.property('files');
+                done();
+            });
+        });
+    });
+
     describe('createDir(remotePath, callback)', function() {
         it('should return success code 200', function(done) {
             upyun.createDir(tempstr, function(err, result) {
