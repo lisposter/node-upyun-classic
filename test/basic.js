@@ -4,6 +4,8 @@ var should = require('should');
 
 var upyun = new UPYUN('travis', 'travisci', 'testtest', 'ctcc');
 var tempstr = '/' + Math.random().toString().slice(-8);
+var remoteDir = '';
+var fileName = '';
 
 describe('REST API: ', function() {
 
@@ -59,44 +61,22 @@ describe('REST API: ', function() {
     });
 
     describe('uploadFile(remotePath, localFile, type, checksum, [opts], callback)', function() {
-        it('should return 200', function(done) {
-            upyun.uploadFile('/test' + tempstr, './LICENSE', 'text/plain', true, function(err, result) {
-                if(err) {
-                    throw err;
-                }
-                result.statusCode.should.be.exactly(200);
-                done();
-            });
-        });
-    });
 
-    describe('uploadFile(remotePath, localFile, type, checksum, [opts], callback)', function() {
-        it('should return 200', function(done) {
-            upyun.uploadFile('/test' + tempstr, './LICENSE', 'text/plain', function(err, result) {
-                if(err) {
-                    throw err;
-                }
-                result.statusCode.should.be.exactly(200);
-                done();
-            });
+        beforeEach(function() {
+            remoteDir = '/' + Math.random().toString().slice(-3);
+            fileName = Math.random().toString().slice(-8);
         });
-    });
 
-    describe('uploadFile(remotePath, localFile, type, checksum, [opts], callback)', function() {
-        it('should return 200', function(done) {
-            upyun.uploadFile('/test' + tempstr, './LICENSE', 'text/plain', '69e97c8b91968c5878f331e53b8dcbf4', function(err, result) {
-                if(err) {
-                    throw err;
-                }
-                result.statusCode.should.be.exactly(200);
-                done();
+        afterEach(function(done) {
+            upyun.removeFile(remoteDir + '/' + fileName, function() {
+                upyun.removeDir(remoteDir, function() {
+                    done();
+                })
             });
-        });
-    });
+        })
 
-    describe('uploadFile(remotePath, localFile, type, checksum, [opts], callback)', function() {
-        it('should return 200', function(done) {
-            upyun.uploadFile('/test' + tempstr + 2, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id molestias ut quisquam, dolores blanditiis nobis labore eum, accusantium dolorem laboriosam est modi sit quam libero aliquam nam corporis nihil rerum.', 'text/plain', true, function(err, result) {
+        it('should accept local path', function(done) {
+            upyun.uploadFile(remoteDir + '/' + fileName, './LICENSE', 'text/plain', function(err, result) {
                 if(err) {
                     throw err;
                 }
@@ -104,11 +84,64 @@ describe('REST API: ', function() {
                 done();
             });
         });
-    });
+
+        it('should accept local path and force checksum', function(done) {
+            upyun.uploadFile(remoteDir + '/' + fileName, './LICENSE', 'text/plain', true, function(err, result) {
+                if(err) {
+                    throw err;
+                }
+                result.statusCode.should.be.exactly(200);
+                done();
+            });
+        });
+
+        it('should accept file md5 pass through', function(done) {
+            upyun.uploadFile(remoteDir + '/' + fileName, './LICENSE', 'text/plain', '69e97c8b91968c5878f331e53b8dcbf4', function(err, result) {
+                if(err) {
+                    throw err;
+                }
+                result.statusCode.should.be.exactly(200);
+                done();
+            });
+        });
+
+        it('should accept string', function(done) {
+            upyun.uploadFile(remoteDir + '/' + fileName, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id molestias ut quisquam, dolores blanditiis nobis labore eum, accusantium dolorem laboriosam est modi sit quam libero aliquam nam corporis nihil rerum.', 'text/plain', true, function(err, result) {
+                if(err) {
+                    throw err;
+                }
+                result.statusCode.should.be.exactly(200);
+                done();
+            });
+        });
+
+    })
+
+
 
     describe('existsFile(remotePath, callback)', function() {
+        before(function(done) {
+            remoteDir = '/' + Math.random().toString().slice(-3);
+            fileName = Math.random().toString().slice(-8);
+
+            upyun.uploadFile(remoteDir + '/' + fileName, './LICENSE', 'text/plain', function(err, result) {
+                if(err) {
+                    throw err;
+                }
+                done();
+            });
+        });
+
+        after(function(done) {
+            upyun.removeFile(remoteDir + '/' + fileName, function() {
+                upyun.removeDir(remoteDir, function() {
+                    done();
+                })
+            });
+        });
+
         it('should return 200', function(done) {
-            upyun.existsFile('/test' + tempstr, function(err, result) {
+            upyun.existsFile(remoteDir + '/' + fileName, function(err, result) {
                 if(err) {
                     throw err;
                 }
@@ -119,8 +152,29 @@ describe('REST API: ', function() {
     });
 
     describe('downloadFile(remotePath, callback)', function() {
+
+        before(function(done) {
+            remoteDir = '/' + Math.random().toString().slice(-3);
+            fileName = Math.random().toString().slice(-8);
+
+            upyun.uploadFile(remoteDir + '/' + fileName, './LICENSE', 'text/plain', function(err, result) {
+                if(err) {
+                    throw err;
+                }
+                done();
+            });
+        });
+
+        after(function(done) {
+            upyun.removeFile(remoteDir + '/' + fileName, function() {
+                upyun.removeDir(remoteDir, function() {
+                    done();
+                })
+            });
+        });
+
         it('should return file\'s content', function(done) {
-            upyun.downloadFile('/test' + tempstr, function(err, result) {
+            upyun.downloadFile(remoteDir + '/' + fileName, function(err, result) {
                 if(err) {
                     throw err;
                 }
@@ -131,8 +185,29 @@ describe('REST API: ', function() {
     });
 
     describe('removeFile(remotePath, callback)', function() {
+
+        before(function(done) {
+            remoteDir = '/' + Math.random().toString().slice(-3);
+            fileName = Math.random().toString().slice(-8);
+
+            upyun.uploadFile(remoteDir + '/' + fileName, './LICENSE', 'text/plain', function(err, result) {
+                if(err) {
+                    throw err;
+                }
+                done();
+            });
+        });
+
+        after(function(done) {
+            upyun.removeFile(remoteDir + '/' + fileName, function() {
+                upyun.removeDir(remoteDir, function() {
+                    done();
+                })
+            });
+        });
+
         it('should return 200', function(done) {
-            upyun.removeFile('/test' + tempstr, function(err, result) {
+            upyun.removeFile(remoteDir + '/' + fileName, function(err, result) {
                 if(err) {
                     throw err;
                 }
