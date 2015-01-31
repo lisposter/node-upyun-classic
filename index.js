@@ -37,7 +37,7 @@ UPYUN.prototype.getUsage = function(callback) {
       return;
     }
     result.data = {
-      space: result.data
+      space: Number(result.data)
     };
     callback(null, utils.parseRes(result));
   });
