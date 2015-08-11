@@ -29,7 +29,7 @@ In this SDK, every api will return a response in the format:
 
 ```js
 {
-    statusCode: 200,    // http stats code
+    statusCode: 200,    // http status code
     headers: {
         server: 'nginx/1.1.19',
         date: 'Wed, 13 Aug 2014 02:15:27 GMT',
