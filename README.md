@@ -48,7 +48,7 @@ When an error occured, the error will be catched, and returned in the response
 
 ```js
 {
-    statusCode: 401,    // http stats code
+    statusCode: 401,    // http status code
     error: {
         error_code: 401,
         request_id: '9e7ce1bac4870ce5f066dd8775fda6b9',
