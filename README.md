@@ -1,21 +1,21 @@
-# node-upyun-legacy
-[![NPM version](https://img.shields.io/npm/v/upyun-legacy.svg?style=flat)](https://www.npmjs.org/package/upyun-legacy)
-[![Build status](https://img.shields.io/travis/lisposter/node-upyun-legacy.svg?style=flat)](https://travis-ci.org/lisposter/node-upyun-legacy)
-[![Test coverage](https://img.shields.io/coveralls/lisposter/node-upyun-legacy.svg?style=flat)](https://coveralls.io/r/lisposter/node-upyun-legacy?branch=master)
+# node-upyun-classic
+[![NPM version](https://img.shields.io/npm/v/upyun-classic.svg?style=flat)](https://www.npmjs.org/package/upyun-classic)
+[![Build status](https://img.shields.io/travis/lisposter/node-upyun-classic.svg?style=flat)](https://travis-ci.org/lisposter/node-upyun-classic)
+[![Test coverage](https://img.shields.io/coveralls/lisposter/node-upyun-classic.svg?style=flat)](https://coveralls.io/r/lisposter/node-upyun-classic?branch=master)
 
-official upyun sdk for node.js (legacy)
+official upyun sdk for node.js (classic)
 
 # Install
 
 ```sh
-$ npm install upyun-legacy --save
+$ npm install upyun-classic --save
 ```
 
 # Example
 ```js
-var UPYUN = require('upyun');
+var UPYUN = require('upyun-classic');
 
-var upyun = new UPYUN('testbucket', 'operatername', 'operaterpwd', 'v0');
+var upyun = new UPYUN('testbucket', 'operatorname', 'operatorpwd', 'v0');
 
 upyun.getUsage(function(err, result) {
     //...
