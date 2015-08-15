@@ -3,7 +3,7 @@
 [![Build status](https://img.shields.io/travis/lisposter/node-upyun-classic.svg?style=flat)](https://travis-ci.org/lisposter/node-upyun-classic)
 [![Test coverage](https://img.shields.io/coveralls/lisposter/node-upyun-classic.svg?style=flat)](https://coveralls.io/r/lisposter/node-upyun-classic?branch=master)
 
-official upyun sdk for node.js (classic)
+upyun sdk for node.js (classic)
 
 # Install
 
