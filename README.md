@@ -23,7 +23,7 @@ upyun.getUsage(function(err, result) {
 ```
 
 # Response
-In this SDK, every api will return a response in the format:
+In this SDK, each api will return a response like below:
 
 #### Normal
 
@@ -67,7 +67,7 @@ When an error occured, the error will be catched, and returned in the response
 
 The different between these two responses is the `error` and `body`.
 
-All responses contain http status code and raw response header for futher usage.
+All responses contain http status code and the raw response header for futher usage.
 
 
 # Docs
