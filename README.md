@@ -1,4 +1,4 @@
-# node-upyun-classic
+# upyun-classic
 [![NPM version](https://img.shields.io/npm/v/upyun-classic.svg?style=flat)](https://www.npmjs.org/package/upyun-classic)
 [![Build status](https://img.shields.io/travis/lisposter/node-upyun-classic.svg?style=flat)](https://travis-ci.org/lisposter/node-upyun-classic)
 [![Test coverage](https://img.shields.io/coveralls/lisposter/node-upyun-classic.svg?style=flat)](https://coveralls.io/r/lisposter/node-upyun-classic?branch=master)
