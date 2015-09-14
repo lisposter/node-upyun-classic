@@ -131,23 +131,25 @@ UPYUN.prototype.uploadFile = function(remotePath, localFile, type, checksum, opt
 
   // TODO: default type
   opts['Content-Type'] = type;
-  var contentLength = 0;
+  var contentLength = isFile ? fs.statSync(localFile).size : localFile.length;
   checksum = arguments.length > 4 && typeof checksum !== 'function' ? checksum : true;
 
   // TODO: optimize logical
-  if(isFile && checksum === true) {
-    contentLength = fs.statSync(localFile).size;
-    utils.md5sumFile(localFile, function(err, result) {
-      opts['Content-MD5'] = result;
-      _upload(contentLength, opts);
-    });
-  } else if(isFile && typeof checksum === 'string') {
-    contentLength = fs.statSync(localFile).size;
+  if (typeof checksum === 'string') {
+    contentLength = isFile ? fs.statSync(localFile).size : localFile.length;
     opts['Content-MD5'] = checksum;
     _upload(contentLength, opts);
+  } else if (checksum === true){
+    if (isFile) {
+      utils.md5sumFile(localFile, function(err, result) {
+        opts['Content-MD5'] = result;
+        _upload(contentLength, opts);
+      });
+    } else {
+      opts['Content-MD5'] = utils.md5sum(localFile);
+      _upload(contentLength, opts);
+    }
   } else {
-    contentLength = localFile.length;
-    opts['Content-MD5'] = utils.md5sum(localFile);
     _upload(contentLength, opts);
   }
 
